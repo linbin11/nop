@@ -10,3 +10,5 @@ WebRoot/WEB-INF/classes/*
 /.settings
 /.mymetadata
 /.myeclipse
+/bin
+/.springBeans

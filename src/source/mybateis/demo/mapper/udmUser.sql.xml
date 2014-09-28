@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="source.mybateis.demo.mapper.UdmUserMapper">
+	<resultMap id="udmUserPojo" type="udmUserPojo">
+		<result property="inoutNumber" column="INOUT_NUMBER" />
+		<result property="deptCode" column="DEPT_CODE" />
+		<result property="goodsIoSign" column="GOODS_IO_SIGN" />
+		<result property="goodsIoSort" column="GOODS_IO_SORT" />
+		<result property="receiver" column="RECEIVER" />
+		<result property="deliverer" column="DELIVERER" />
+		<result property="goodsIoDate" column="GOODS_IO_DATE" />
+		<result property="empIdOperator" column="EMP_ID_OPERATOR" />
+		<result property="empIdCheck" column="EMP_ID_CHECK" />
+		<result property="empIdInver" column="EMP_ID_INVER" />
+		<result property="payAmount" column="PAY_AMOUNT" />
+		<result property="payFinishedAmount" column="PAY_FINISHED_AMOUNT" />
+		<result property="accountSign" column="ACCOUNT_SIGN" />
+		<result property="docuOrderNumber" column="DOCU_ORDER_NUMBER" />
+		<result property="payNoticeNo" column="PAY_NOTICE_NO" />
+		<result property="priceAdjustmentId" column="PRICE_ADJUSTMENT_ID" />
+		<result property="supplierSerialNo" column="SUPPLIER_SERIAL_NO" />
+		<result property="supplier" column="SUPPLIER" />
+		<result property="createTime" column="CREATE_TIME" />
+		<result property="submitTime" column="SUBMIT_TIME" />
+		<result property="accountTime" column="ACCOUNT_TIME" />
+		<result property="note" column="NOTE" />
+		<result property="inoutStatus" column="INOUT_STATUS" />
+		<result property="directInoutSign" column="DIRECT_INOUT_SIGN" />
+		<result property="accountNo" column="ACCOUNT_NO" />
+		<result property="accountSubNo" column="ACCOUNT_SUB_NO" />
+		<result property="payType" column="PAY_TYPE" />
+		<result property="managerTypeCode" column="MANAGER_TYPE_CODE" />
+		<result property="classNo" column="CLASS_NO" />
+		<result property="purchaseSupplySerialNo" column="PURCHASE_SUPPLY_SERIAL_NO" />
+	</resultMap>
+
+
+	<insert id="insertUdmUser" keyProperty="inoutNumber" parameterType="udmUserPojo">
+		<selectKey keyProperty="inoutNumber" resultType="java.lang.String"
+			order="BEFORE">
+			select ifnull(max(INOUT_NUMBER),0)+1 from goods_docu_head
+		</selectKey>
+		insert into goods_docu_head (INOUT_NUMBER,PURCHASE_SUPPLY_SERIAL_NO) 
+		values(#{inoutNumber,jdbcType=VARCHAR},#{purchaseSupplySerialNo,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="findUdmUserPojos" resultMap="udmUserPojo">
+		select * from goods_docu_head
+	</select>
+</mapper>

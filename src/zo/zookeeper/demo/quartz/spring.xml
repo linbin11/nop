@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	<!-- <bean id="quartzdemo" class="zo.zookeeper.demo.quartz.QuartzBeanProxy">
+		<property name="className" value="zo.zookeeper.demo.quartz.SayHelloJobTestImpl" />
+		<property name="methodName" value="sayHello" />
+		<property name="zookeeperData" ref="zookeeperData"/>
+		<property name="znodeNameId" value="sayHelloJobTest" />
+	</bean> -->
+	
+	
+	<bean id="zookeeperData" class="zo.zookeeper.demo.pojo.ZookeeperData">
+		<property name="zookeeperUrl" value="zookeeper://192.168.219.76:2182?backup=192.168.219.77:2182,192.168.219.78:2182"/>
+		<property name="sessionTimeout" value="30000"/>
+	</bean>
+
+	<bean id="quartzdemoInteceptor" class="zo.zookeeper.demo.quartz.QuartzBeanInteceptor">
+		<property name="methodName" value="sayHello" />
+		<property name="zookeeperData" ref="zookeeperData"/>
+		<property name="znodeNameId" value="sayHelloJobTest" />
+	</bean>
+
+	<bean id="quartzdemo" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target">
+			<bean class="zo.zookeeper.demo.quartz.SayHelloJobTestImpl"></bean>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>quartzdemoInteceptor</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="goodsStockSnapshotThreadJobDetail"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="quartzdemo" />
+		<property name="targetMethod" value="sayHello" />
+	</bean>
+
+	<bean id="goodsStockSnapshotThreadTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail">
+			<ref bean="goodsStockSnapshotThreadJobDetail" />
+		</property>
+		<!--"0 15 10 ? * MON-FRI" 周一至周五的上午10:15触发 -->
+		<!-- 三十秒执行一次 -->
+		<property name="cronExpression" value="0/5 * * * * ?" />
+	</bean>
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="goodsStockSnapshotThreadTrigger" />
+			</list>
+		</property>
+	</bean>
+
+</beans>

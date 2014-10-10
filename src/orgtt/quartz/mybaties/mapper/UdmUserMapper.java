@@ -1,8 +1,8 @@
-package source.mybateis.demo.mapper;
+package orgtt.quartz.mybaties.mapper;
 
 import java.util.List;
 
-import source.mybateis.demo.pojo.UdmUserPojo;
+import orgtt.quartz.mybaties.pojo.UdmUserPojo;
 
 public interface UdmUserMapper {
 	

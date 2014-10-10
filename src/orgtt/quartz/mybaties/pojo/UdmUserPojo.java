@@ -1,4 +1,4 @@
-package source.mybateis.demo.pojo;
+package orgtt.quartz.mybaties.pojo;
 
 import java.util.Date;
 import org.slf4j.Logger;

@@ -11,7 +11,7 @@
 
 	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="jobTask" />
-		<property name="cronExpression" value="0/15 * * * * ?" />
+		<property name="cronExpression" value="0/5 * * * * ?" />
 		<property name="misfireInstruction" value="2"/>
 	</bean>
 

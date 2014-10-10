@@ -1,9 +1,8 @@
-package source.mybateis.demo.run;
+package orgtt.quartz.mybaties.run;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import source.mybateis.demo.mapper.UdmUserMapper;
-import source.mybateis.demo.pojo.UdmUserPojo;
+import orgtt.quartz.mybaties.mapper.UdmUserMapper;
+import orgtt.quartz.mybaties.pojo.UdmUserPojo;
 
 public class RunMybaties {
 
